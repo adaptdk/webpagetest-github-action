@@ -10,6 +10,7 @@ const WPT_OPTIONS = core.getInput("wptOptions");
 const WPT_API_KEY = core.getInput("apiKey");
 const WPT_URLS = core.getInput("urls").split("\n");
 const WPT_LABEL = core.getInput("label");
+const WPT_SHOW_WATERFALL = core.getInput("show_waterfall");
 const GITHUB_TOKEN = core.getInput("GITHUB_TOKEN");
 const DIRECTORY = process.env.GITHUB_WORKSPACE;
 const GH_EVENT_NAME = process.env.GITHUB_EVENT_NAME;
@@ -143,6 +144,7 @@ async function run() {
   //for our commit
   let runData = {};
   runData["tests"] = [];
+  runData["show_waterfall"] = WPT_SHOW_WATERFALL;
 
   Promise.all(
     WPT_URLS.map(async (url) => {
