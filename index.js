@@ -20,6 +20,9 @@ const METRICS = {
   "chromeUserTiming.LargestContentfulPaint": "Largest Contentful Paint",
   "chromeUserTiming.CumulativeLayoutShift": "Cumulative Layout Shift",
 };
+const WPT_BUDGET_RESULT_FAIL = 0;
+const WPT_BUDGET_RESULT_PASS = 1;
+const WPT_BUDGET_RESULT_UNKWOWN = 2;
 
 const isReportSupported = () => GH_EVENT_NAME == "pull_request" || GH_EVENT_NAME == "issue_comment";
 
@@ -95,9 +98,14 @@ function collectData(results, runData) {
     core.debug(key);
     core.debug(value);
     if (results.data.median.firstView[key]) {
+      let pass = WPT_BUDGET_RESULT_UNKWOWN;
+      if (runData.specs.median.firstView[key]) {
+          pass = results.data.median.firstView[key] < runData.specs.median.firstView[key];
+      }
       testData.metrics.push({
         name: value,
         value: results.data.median.firstView[key],
+        passes: pass,
       });
     }
   }
@@ -143,6 +151,9 @@ async function run() {
   //for our commit
   let runData = {};
   runData["tests"] = [];
+  if (WPT_BUDGET) {
+    runData["specs"] = options.specs;
+  }
 
   Promise.all(
     WPT_URLS.map(async (url) => {
