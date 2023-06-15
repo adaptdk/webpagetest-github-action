@@ -5,8 +5,8 @@ Automatically triggered by [WebPageTest](https://www.webpagetest.org)'s GitHub A
 <% tests.forEach((test) => { -%>
 <% if (first) { -%>
 <% first = false; -%>
-| URL | <% test.metrics.forEach((metric) => { %><%- metric.name %> | <% }); %>
-| -- | <% test.metrics.forEach((metric) => { %>--- | <% }); %>
+| URL | Test |<% test.metrics.forEach((metric) => { %><%- metric.name %> | <% }); %>
+| -- | -- | <% test.metrics.forEach((metric) => { %>--- | <% }); %>
 <% } -%>
-| <%- test.url %> | <% test.metrics.forEach((metric) => { %><%- metric.value %> | <% }); %>
+| [<%- (new URL(test.url)).pathname %>](<%- test.url %>) | [result](<%- test.testLink %>) | <% test.metrics.forEach((metric) => { %><%- metric.value %> | <% }); %>
 <% }); %>
