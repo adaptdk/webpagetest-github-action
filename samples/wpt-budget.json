@@ -1,7 +1,10 @@
 {
- "median": {
-     "firstView": {
-         "firstContentfulPaint": 2000
-     }
- }   
+    "median": {
+        "firstView": {
+            "chromeUserTiming.LargestContentfulPaint": 2500,
+            "chromeUserTiming.CumulativeLayoutShift": 0.1,
+            "firstContentfulPaint": 1800,
+            "TotalBlockingTime": 200
+        }
+    }
 }
